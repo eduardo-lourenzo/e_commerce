@@ -15,8 +15,6 @@ public class Customer {
     @NotBlank(message = "O nome é obrigatório.")
     private String name;
 
-
-
     @NotBlank(message = "O email é obrigatório.")
     @Email(message = "O email deve ser válido.")
     @Column(unique = true)
