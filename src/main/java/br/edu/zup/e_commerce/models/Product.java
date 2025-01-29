@@ -10,15 +10,15 @@ import jakarta.validation.constraints.Positive;
 @Entity
 public class Product {
     @Id
-    @NotBlank(message = "O nome do produto não pode estar vazio.")
+    @NotBlank(message = "O nome do produto é obrigatório.")
     private String name;
 
-    @NotNull(message = "O preço do produto não pode ser nulo.")
+    @NotNull(message = "O preço do produto é obrigatório.")
     @Positive(message = "O preço do produto deve ser maior que zero.")
     private Double price;
 
-    @NotNull(message = "A quantidade do produto não pode ser nula.")
-    @Min(value = 0, message = "A quantidade do produto deve ser maior ou igual a 0.")
+    @NotNull(message = "A quantidade do produto é obrigatória.")
+    @Min(value = 0, message = "A quantidade do produto deve ser maior ou igual a zero.")
     private int quantity;
 
     public Product() {
