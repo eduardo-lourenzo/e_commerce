@@ -1,32 +1,24 @@
-package br.edu.zup.e_commerce.models;
+package br.edu.zup.e_commerce.dtos;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-// import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
 
-@Entity
-public class Customer {
-    @Id
-    // @NotBlank(message = "O CPF é obrigatório.")
-    // @Pattern(regexp = "\\d{11}", message = "O CPF deve conter exatamente 11 dígitos.")
+public class CustomerRequestDTO {
     @CPF(message = "O CPF não é válido.")
     private String cpf;
-
 
     @NotBlank(message = "O nome é obrigatório.")
     private String name;
 
     @NotBlank(message = "O email é obrigatório.")
     @Email(message = "O email deve ser válido.")
-    @Column(unique = true)
     private String email;
 
-    public Customer() {
+    public CustomerRequestDTO() {
     }
 
-    public Customer(String cpf, String name, String email) {
+    public CustomerRequestDTO(String cpf, String name, String email) {
         this.cpf = cpf;
         this.name = name;
         this.email = email;

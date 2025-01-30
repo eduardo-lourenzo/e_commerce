@@ -1,11 +1,13 @@
 package br.edu.zup.e_commerce.services;
 
-import org.springframework.http.ResponseEntity;
+import br.edu.zup.e_commerce.dtos.CustomerRequestDTO;
+import br.edu.zup.e_commerce.dtos.CustomerResponseDTO;
+import jakarta.validation.Valid;
 
 public interface CustomerService {
-    ResponseEntity<?> createCustomer(/*Customer customer*/);
+    CustomerResponseDTO createCustomer(CustomerRequestDTO customerRequestDTO);
 
-    ResponseEntity<?> getCustomerById(String cpf);
+    CustomerResponseDTO getCustomerById(String cpf);
 
-    ResponseEntity<?> updateCustomer(String cpf);
+    CustomerResponseDTO updateCustomer(String cpf, CustomerRequestDTO customerRequestDTO);
 }
