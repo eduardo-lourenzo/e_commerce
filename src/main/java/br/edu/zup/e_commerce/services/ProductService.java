@@ -1,11 +1,14 @@
 package br.edu.zup.e_commerce.services;
 
-import org.springframework.http.ResponseEntity;
+import br.edu.zup.e_commerce.dtos.ProductRequestDTO;
+import br.edu.zup.e_commerce.dtos.ProductResponseDTO;
+
+import java.util.List;
 
 public interface ProductService {
-    ResponseEntity<?> createProduct(/*Product product*/);
+    ProductResponseDTO createProduct(ProductRequestDTO product);
 
-    ResponseEntity<?> getAllProducts();
+    List<ProductResponseDTO> getAllProducts();
 
-    ResponseEntity<?> updateCustomer(String name);
+    Void deleteProduct(String name);
 }
