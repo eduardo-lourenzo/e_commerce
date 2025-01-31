@@ -2,13 +2,13 @@ package br.edu.zup.e_commerce.services;
 
 import br.edu.zup.e_commerce.dtos.CustomerRequestDTO;
 import br.edu.zup.e_commerce.dtos.CustomerResponseDTO;
+import br.edu.zup.e_commerce.mappers.CustomerMapper;
 import br.edu.zup.e_commerce.models.Customer;
 import br.edu.zup.e_commerce.repositories.CustomerRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -22,21 +22,11 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerResponseDTO createCustomer(CustomerRequestDTO customerRequestDTO) {
-        Customer newCustomer = new Customer(
-                null,
-                customerRequestDTO.getCpf(),
-                customerRequestDTO.getName(),
-                customerRequestDTO.getEmail()
-        );
+        Customer newCustomer = CustomerMapper.fromDTOToEntity(customerRequestDTO);
 
         Customer savedCustomer = saveCustomerHandlingExceptions(newCustomer);
 
-        return new CustomerResponseDTO(
-                savedCustomer.getId(),
-                savedCustomer.getCpf(),
-                savedCustomer.getName(),
-                savedCustomer.getEmail()
-        );
+        return CustomerMapper.fromEntityToDTO(savedCustomer);
     }
 
     @Override
@@ -46,12 +36,7 @@ public class CustomerServiceImpl implements CustomerService {
         );
         // CustomerNotFoundException("Cliente com CPF " + cpf + " não foi encontrado.") */
 
-        return new CustomerResponseDTO(
-                foundCustomer.getId(),
-                foundCustomer.getCpf(),
-                foundCustomer.getName(),
-                foundCustomer.getEmail()
-        );
+        return CustomerMapper.fromEntityToDTO(foundCustomer);
     }
 
     @Override
@@ -66,12 +51,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         Customer savedCustomer = saveCustomerHandlingExceptions(existingCustomer);
 
-        return new CustomerResponseDTO(
-                savedCustomer.getId(),
-                savedCustomer.getCpf(),
-                savedCustomer.getName(),
-                savedCustomer.getEmail()
-        );
+        return CustomerMapper.fromEntityToDTO(savedCustomer);
     }
 
     private Customer saveCustomerHandlingExceptions(Customer customer) {
