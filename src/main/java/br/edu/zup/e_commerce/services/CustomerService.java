@@ -6,7 +6,7 @@ import br.edu.zup.e_commerce.dtos.CustomerResponseDTO;
 public interface CustomerService {
     CustomerResponseDTO createCustomer(CustomerRequestDTO customerRequestDTO);
 
-    CustomerResponseDTO getCustomerById(String cpf);
+    CustomerResponseDTO getCustomerByCpf(String cpf);
 
     CustomerResponseDTO updateCustomer(String cpf, CustomerRequestDTO customerRequestDTO);
 }

@@ -30,10 +30,15 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(String cpf, String name, String email) {
+    public Customer(Long id, String cpf, String name, String email) {
+        this.id = id;
         this.cpf = cpf;
         this.name = name;
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getCpf() {
