@@ -9,8 +9,12 @@ import org.hibernate.validator.constraints.br.CPF;
 @Entity
 public class Customer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     // @NotBlank(message = "O CPF é obrigatório.")
     // @Pattern(regexp = "\\d{11}", message = "O CPF deve conter exatamente 11 dígitos.")
+    @Column(unique = true)
     @CPF(message = "O CPF não é válido.")
     private String cpf;
 
