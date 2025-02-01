@@ -12,19 +12,17 @@ import java.util.NoSuchElementException;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
-
     private final CustomerRepository customerRepository;
 
     public CustomerServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
     }
 
-
     @Override
     public CustomerResponseDTO createCustomer(CustomerRequestDTO customerRequestDTO) {
         Customer newCustomer = CustomerMapper.fromDTOToEntity(customerRequestDTO);
 
-        Customer savedCustomer = saveCustomerHandlingExceptions(newCustomer);
+        Customer savedCustomer = saveCustomerSafely(newCustomer);
 
         return CustomerMapper.fromEntityToDTO(savedCustomer);
     }
@@ -49,12 +47,12 @@ public class CustomerServiceImpl implements CustomerService {
         existingCustomer.setName(updateCustomerRequestDTO.getName());
         existingCustomer.setEmail(updateCustomerRequestDTO.getEmail());
 
-        Customer savedCustomer = saveCustomerHandlingExceptions(existingCustomer);
+        Customer savedCustomer = saveCustomerSafely(existingCustomer);
 
         return CustomerMapper.fromEntityToDTO(savedCustomer);
     }
 
-    private Customer saveCustomerHandlingExceptions(Customer customer) {
+    private Customer saveCustomerSafely(Customer customer) {
         try {
             return customerRepository.save(customer);
         } catch (DataIntegrityViolationException e) {

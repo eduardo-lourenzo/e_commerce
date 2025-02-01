@@ -2,24 +2,51 @@ package br.edu.zup.e_commerce.services;
 
 import br.edu.zup.e_commerce.dtos.ProductRequestDTO;
 import br.edu.zup.e_commerce.dtos.ProductResponseDTO;
+import br.edu.zup.e_commerce.mappers.ProductMapper;
+import br.edu.zup.e_commerce.models.Product;
+import br.edu.zup.e_commerce.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
-public class ProductServiceImpl implements ProductService{
+public class ProductServiceImpl implements ProductService {
+    private final ProductRepository productRepository;
+
+    public ProductServiceImpl(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
+
     @Override
     public ProductResponseDTO createProduct(ProductRequestDTO product) {
-        return null;
+        // Teste erro de id(name) repetido
+        return ProductMapper.fromEntityToDTO(
+                productRepository.save(
+                        ProductMapper.fromDTOToEntity(product)
+                )
+        );
     }
 
     @Override
     public List<ProductResponseDTO> getAllProducts() {
-        return List.of();
+        List<Product> products = productRepository.findAll();
+
+        return products.stream()
+                .map(ProductMapper::fromEntityToDTO)
+                .collect(Collectors.toList());
     }
 
     @Override
     public void deleteProduct(String name) {
+        Product foundProduct = productRepository.findById(name)
+                .orElseThrow(() ->
+                        new RuntimeException(
+                                "Produto com o nome " + name + " não encontrado."
+                        )
+                );
+        // new ProductNotFoundException("Produto com o nome '" + name + "' não encontrado."));
 
+        productRepository.delete(foundProduct);
     }
 }
