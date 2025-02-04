@@ -32,7 +32,7 @@ public class CustomerServiceImpl implements CustomerService {
         Customer foundCustomer = customerRepository.findByCpf(cpf).orElseThrow(() ->
                 new NoSuchElementException("Cliente com CPF " + cpf + " não foi encontrado.")
         );
-        // CustomerNotFoundException("Cliente com CPF " + cpf + " não foi encontrado.") */
+        // CustomerNotFoundException("Cliente com CPF " + cpf + " não foi encontrado.")
 
         return CustomerMapper.fromEntityToDTO(foundCustomer);
     }

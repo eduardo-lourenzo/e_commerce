@@ -1,7 +1,10 @@
 package br.edu.zup.e_commerce.services;
 
-import org.springframework.http.ResponseEntity;
+import br.edu.zup.e_commerce.dtos.PurchaseRequestDTO;
+
+import java.util.List;
+import java.util.Map;
 
 public interface PurchaseService {
-    ResponseEntity<?> updateProduct(/*Purchase purchase*/);
+    Map<String, String> updatePurchase(PurchaseRequestDTO purchaseRequestDT);
 }
