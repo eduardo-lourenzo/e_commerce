@@ -2,6 +2,8 @@ package br.edu.zup.e_commerce.services;
 
 import br.edu.zup.e_commerce.dtos.CustomerRequestDTO;
 import br.edu.zup.e_commerce.dtos.CustomerResponseDTO;
+import br.edu.zup.e_commerce.exceptions.BusinessCustomerException;
+import br.edu.zup.e_commerce.exceptions.CustomerNotFoundException;
 import br.edu.zup.e_commerce.mappers.CustomerMapper;
 import br.edu.zup.e_commerce.models.Customer;
 import br.edu.zup.e_commerce.repositories.CustomerRepository;
@@ -30,22 +32,21 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public CustomerResponseDTO getCustomerByCpf(String cpf) {
         Customer foundCustomer = customerRepository.findByCpf(cpf).orElseThrow(() ->
-                new NoSuchElementException("Cliente com CPF " + cpf + " não foi encontrado.")
+                new CustomerNotFoundException("Cliente com CPF " + cpf + " não foi encontrado.")
         );
-        // CustomerNotFoundException("Cliente com CPF " + cpf + " não foi encontrado.")
 
         return CustomerMapper.fromEntityToDTO(foundCustomer);
     }
 
     @Override
-    public CustomerResponseDTO updateCustomer(String cpf, CustomerRequestDTO updateCustomerRequestDTO) {
+    public CustomerResponseDTO updateCustomer(String cpf, CustomerRequestDTO updateCustomer) {
         Customer existingCustomer = customerRepository.findByCpf(cpf).orElseThrow(() ->
-                new NoSuchElementException("Cliente com CPF " + cpf + " não foi encontrado.")
+                new CustomerNotFoundException("Cliente com CPF " + cpf + " não foi encontrado.")
         );
 
-        existingCustomer.setCpf(updateCustomerRequestDTO.getCpf());
-        existingCustomer.setName(updateCustomerRequestDTO.getName());
-        existingCustomer.setEmail(updateCustomerRequestDTO.getEmail());
+        existingCustomer.setCpf(updateCustomer.getCpf());
+        existingCustomer.setName(updateCustomer.getName());
+        existingCustomer.setEmail(updateCustomer.getEmail());
 
         Customer savedCustomer = saveCustomerSafely(existingCustomer);
 
@@ -56,9 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             return customerRepository.save(customer);
         } catch (DataIntegrityViolationException e) {
-            throw new RuntimeException("CPF ou email já cadastrado.");
-            // throw new BusinessCustomerException("CPF ou email já cadastrado.");
-            // e.getMessage().contains("UK_CPF");
+            throw new BusinessCustomerException(e.getMessage());
         }
     }
 }

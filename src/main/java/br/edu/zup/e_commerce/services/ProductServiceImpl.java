@@ -2,6 +2,7 @@ package br.edu.zup.e_commerce.services;
 
 import br.edu.zup.e_commerce.dtos.ProductRequestDTO;
 import br.edu.zup.e_commerce.dtos.ProductResponseDTO;
+import br.edu.zup.e_commerce.exceptions.ProductNotFoundException;
 import br.edu.zup.e_commerce.mappers.ProductMapper;
 import br.edu.zup.e_commerce.models.Product;
 import br.edu.zup.e_commerce.repositories.ProductRepository;
@@ -41,11 +42,10 @@ public class ProductServiceImpl implements ProductService {
     public void deleteProduct(String name) {
         Product foundProduct = productRepository.findById(name)
                 .orElseThrow(() ->
-                        new RuntimeException(
+                        new ProductNotFoundException(
                                 "Produto com o nome " + name + " não encontrado."
                         )
                 );
-        // new ProductNotFoundException("Produto com o nome '" + name + "' não encontrado."));
 
         productRepository.delete(foundProduct);
     }

@@ -1,6 +1,9 @@
 package br.edu.zup.e_commerce.services;
 
 import br.edu.zup.e_commerce.dtos.PurchaseRequestDTO;
+import br.edu.zup.e_commerce.exceptions.CustomerNotFoundException;
+import br.edu.zup.e_commerce.exceptions.ProductNotFoundException;
+import br.edu.zup.e_commerce.exceptions.ProductOutOfStockException;
 import br.edu.zup.e_commerce.models.Customer;
 import br.edu.zup.e_commerce.models.Product;
 import br.edu.zup.e_commerce.repositories.CustomerRepository;
@@ -35,11 +38,9 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     private Customer getCustomer(String cpf) {
-        // Validar CPF
         return customerRepository.findByCpf(cpf).orElseThrow(() ->
-                new NoSuchElementException("Cliente com CPF " + cpf + " não foi encontrado.")
+                new CustomerNotFoundException("Cliente com CPF " + cpf + " não foi encontrado.")
         );
-        // CustomerNotFoundException("Cliente com CPF " + cpf + " não foi encontrado.")
     }
 
     private List<Product> productsAllFound(List<PurchaseRequestDTO.ProductDTO> products) {
@@ -47,15 +48,12 @@ public class PurchaseServiceImpl implements PurchaseService {
         products.forEach(product ->
                 {
                     Product foundProduct = productRepository.findById(product.getNome()).orElseThrow(() ->
-                            new RuntimeException(
+                            new ProductNotFoundException(
                                     "Produto com o nome " + product.getNome() + " não encontrado."
                             )
                     );
-                    // new ProductNotFoundException("Produto com o nome '" + product.get("nome") + "' não encontrado."));
                     if (foundProduct.getQuantity() == 0) {
-                        throw new RuntimeException("Produto " + foundProduct.getName() + " em falta no estoque");
-                        // throw new ProductOutStockException("Produto " + foundProduct.getName() + " em falta no estoque");
-                        // create Map "Produto em falta: [nome do produto]"
+                        throw new ProductOutOfStockException("Produto em falta: " + foundProduct.getName() + ".");
                     }
                     foundProducts.add(foundProduct);
                 }
