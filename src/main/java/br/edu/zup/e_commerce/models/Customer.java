@@ -3,7 +3,6 @@ package br.edu.zup.e_commerce.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-// import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.br.CPF;
 
 @Entity
@@ -12,10 +11,9 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // @NotBlank(message = "O CPF é obrigatório.")
-    // @Pattern(regexp = "\\d{11}", message = "O CPF deve conter exatamente 11 dígitos.")
-    @Column(unique = true)
+    @NotBlank(message = "O CPF é obrigatório.")
     @CPF(message = "O CPF inválido.")
+    @Column(unique = true)
     private String cpf;
 
 

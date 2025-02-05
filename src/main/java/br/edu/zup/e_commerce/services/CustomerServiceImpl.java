@@ -57,7 +57,8 @@ public class CustomerServiceImpl implements CustomerService {
         try {
             return customerRepository.save(customer);
         } catch (DataIntegrityViolationException e) {
-            throw new BusinessCustomerException(e.getMessage());
+            throw new BusinessCustomerException("CPF e/ou Email já cadastrado(s).");
+
         }
     }
 }

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.br.CPF;
 
 public class CustomerRequestDTO {
+    @NotBlank(message = "O CPF é obrigatório.")
     @CPF(message = "O CPF não é válido.")
     private String cpf;
 

@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductResponseDTO createProduct(ProductRequestDTO product) {
-        // Teste erro de id(name) repetido
+        // Sobrescreve id(name) existente. Falta um metodo update
         return ProductMapper.fromEntityToDTO(
                 productRepository.save(
                         ProductMapper.fromDTOToEntity(product)

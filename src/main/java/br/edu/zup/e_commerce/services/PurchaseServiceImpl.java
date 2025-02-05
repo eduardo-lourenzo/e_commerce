@@ -8,12 +8,12 @@ import br.edu.zup.e_commerce.models.Customer;
 import br.edu.zup.e_commerce.models.Product;
 import br.edu.zup.e_commerce.repositories.CustomerRepository;
 import br.edu.zup.e_commerce.repositories.ProductRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
@@ -26,7 +26,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public Map<String, String> updatePurchase(PurchaseRequestDTO purchaseRequestDTO) {
+    public Map<String, String> updatePurchase(@Valid PurchaseRequestDTO purchaseRequestDTO) {
         Customer foundCustomer = getCustomer(purchaseRequestDTO.getCpf());
         List<Product> foundProducts = productsAllFound(purchaseRequestDTO.getProducts());
         foundProducts.forEach(product -> {
@@ -47,9 +47,9 @@ public class PurchaseServiceImpl implements PurchaseService {
         List<Product> foundProducts = new ArrayList<>();
         products.forEach(product ->
                 {
-                    Product foundProduct = productRepository.findById(product.getNome()).orElseThrow(() ->
+                    Product foundProduct = productRepository.findById(product.getName()).orElseThrow(() ->
                             new ProductNotFoundException(
-                                    "Produto com o nome " + product.getNome() + " não encontrado."
+                                    "Produto com o nome " + product.getName() + " não encontrado."
                             )
                     );
                     if (foundProduct.getQuantity() == 0) {
