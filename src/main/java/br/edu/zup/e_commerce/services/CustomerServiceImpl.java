@@ -44,6 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
                 new CustomerNotFoundException("Cliente com CPF " + cpf + " não foi encontrado.")
         );
 
+        // Permite alterar o CPF
         existingCustomer.setCpf(updateCustomer.getCpf());
         existingCustomer.setName(updateCustomer.getName());
         existingCustomer.setEmail(updateCustomer.getEmail());
