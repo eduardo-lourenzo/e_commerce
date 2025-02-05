@@ -9,7 +9,7 @@ public class CustomerMapper {
         throw new UnsupportedOperationException("Esta é uma classe mapeadora e não pode ser instanciada");
     }
 
-    public static Customer fromDTOToEntity(CustomerRequestDTO requestDTO){
+    public static Customer fromDTOToEntity(CustomerRequestDTO requestDTO) {
         return new Customer(
                 null,
                 requestDTO.getCpf(),
@@ -18,7 +18,7 @@ public class CustomerMapper {
         );
     }
 
-    public static CustomerResponseDTO fromEntityToDTO(Customer entity){
+    public static CustomerResponseDTO fromEntityToDTO(Customer entity) {
         return new CustomerResponseDTO(
                 entity.getId(),
                 entity.getCpf(),

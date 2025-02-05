@@ -16,7 +16,7 @@ public class ProductRequestDTO {
     @NotNull(message = "A quantidade do produto é obrigatória.")
     @Min(value = 0, message = "A quantidade do produto deve ser maior ou igual a zero.")
     private int quantity;
-    
+
     public ProductRequestDTO() {
     }
 

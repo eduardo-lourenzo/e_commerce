@@ -9,7 +9,7 @@ public class ProductMapper {
         throw new UnsupportedOperationException("Esta é uma classe mapeadora e não pode ser instanciada");
     }
 
-    public static Product fromDTOToEntity(ProductRequestDTO requestDTO){
+    public static Product fromDTOToEntity(ProductRequestDTO requestDTO) {
         return new Product(
                 requestDTO.getName(),
                 requestDTO.getPrice(),
@@ -17,7 +17,7 @@ public class ProductMapper {
         );
     }
 
-    public static ProductResponseDTO fromEntityToDTO(Product entity){
+    public static ProductResponseDTO fromEntityToDTO(Product entity) {
         return new ProductResponseDTO(
                 entity.getName(),
                 entity.getPrice(),
